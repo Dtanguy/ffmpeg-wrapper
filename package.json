@@ -2,7 +2,7 @@
   "name": "ffmpeg-wrapper",
   "version": "1.0.0",
   "description": "Wrapper for ffmpeg in node",
-  "main": "test.js",
+  "main": "ffmpeg-wrapper.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

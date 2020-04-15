@@ -1,9 +1,14 @@
 const cp = require("child_process");
 const fs = require("fs");
 var ffmpeg_path = "ffmpeg";
+var ffmpeg_debug = false;
 
 function setPath(path) {
   ffmpeg_path = path;
+}
+
+function setDebug() {
+  ffmpeg_debug = true;
 }
 
 // Clean output file (otherwise ffmpeg child process stay stuck)
@@ -97,7 +102,7 @@ function mergeImg(param, workingCb, endCb, jobid) {
   filter_complex2 += " concat=n=" + input.length + ':v=1:a=0" ';
 
   let cmd = loop + filter_complex1 + filter_complex2 + output;
-  run(cmd, workingCb, endCb);
+  run(cmd, workingCb, endCb, jobid);
 }
 
 function run(cmd, workingCb, endCb, jobid) {
@@ -105,14 +110,23 @@ function run(cmd, workingCb, endCb, jobid) {
     console.err("ffmpeg.run: Input error");
     return;
   }
-  console.log("Start cmd: ffmpeg" + cmd);
+
+  cmd = '"' + ffmpeg_path + '" ' + cmd;
+  if(ffmpeg_debug){
+    console.log("Start cmd: " + cmd);
+  }
   var ffmpeg = cp.exec(cmd);
 
   ffmpeg.stdout.on("data", function (data) {
-    //workingCb(data.toString());
+    if(ffmpeg_debug){
+      console.log(data);
+    }  
   });
 
   ffmpeg.stderr.on("data", function (data) {
+    if(ffmpeg_debug){
+      console.log(data);
+    }    
     let tmp = data.toString().split("frame=")[1];
     if (tmp) {
       tmp = tmp.split("fps=")[0];
@@ -121,11 +135,15 @@ function run(cmd, workingCb, endCb, jobid) {
   });
 
   ffmpeg.on("exit", function (data) {
+    if(ffmpeg_debug){
+      console.log(data);
+    }  
     endCb(data.toString(), jobid);
   });
 }
 
 module.exports.setPath = setPath;
+module.exports.setDebug = setDebug;
 module.exports.runEasy = runEasy;
 module.exports.mergeImg = mergeImg;
 module.exports.rmOutput = rmOutput;

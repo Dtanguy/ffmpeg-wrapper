@@ -30,9 +30,9 @@ ffmpeg.run(cmd, working, end, 3);
 */
 
 function working(frames, jobid) {
-  console.log("Job n°" + jobid + " frame progress: " + frames);
+  console.log("Job n°" + jobid + " Frame: " + frames);
 }
 
 function end(data, jobid) {
-  console.log("Job n°" + jobid + "End");
+  console.log("End Job n°" + jobid);
 }
