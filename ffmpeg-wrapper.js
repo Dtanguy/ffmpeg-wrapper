@@ -28,7 +28,7 @@ let param_easy = {
   output: "output.mp4",
 };
 */
-function runEasy(param, workingCb, endCb) {
+function runEasy(param, workingCb, endCb, jobid) {
   rmOutput(param.output);
 
   // Check
@@ -48,7 +48,7 @@ function runEasy(param, workingCb, endCb) {
   cmd += " -threads " + param.threads;
   cmd += " -i " + param.input;
   cmd += " " + param.output;
-  run(cmd, workingCb, endCb);
+  run(cmd, workingCb, endCb, jobid);
 }
 
 /*
@@ -60,7 +60,7 @@ let param_merge = {
   output: "output.mp4",
 };
 */
-function mergeImg(param, workingCb, endCb) {
+function mergeImg(param, workingCb, endCb, jobid) {
   rmOutput(param.output);
 
   // Check
@@ -100,7 +100,7 @@ function mergeImg(param, workingCb, endCb) {
   run(cmd, workingCb, endCb);
 }
 
-function run(cmd, workingCb, endCb) {
+function run(cmd, workingCb, endCb, jobid) {
   if (!cmd) {
     console.err("ffmpeg.run: Input error");
     return;
@@ -116,12 +116,12 @@ function run(cmd, workingCb, endCb) {
     let tmp = data.toString().split("frame=")[1];
     if (tmp) {
       tmp = tmp.split("fps=")[0];
-      workingCb(parseInt(tmp));
+      workingCb(parseInt(tmp), jobid);
     }
   });
 
   ffmpeg.on("exit", function (data) {
-    endCb(data.toString());
+    endCb(data.toString(), jobid);
   });
 }
 

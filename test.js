@@ -8,7 +8,7 @@ let param_easy = {
   input: "input-img-%d.jpg",
   output: "output.mp4",
 };
-ffmpeg.runEasy(param_easy, working, end);
+ffmpeg.runEasy(param_easy, working, end, 1);
 */
 
 /*
@@ -21,18 +21,18 @@ let param_merge = {
   output: "output.mp4",
   outputRatio: "1280:720",
 };
-ffmpeg.mergeImg(param_merge, working, end);
+ffmpeg.mergeImg(param_merge, working, end, 2);
 */
 
 /*
 let cmd = "-r 30 -threads 2 -i input-img-%d.jpg output.mp4";
-ffmpeg.run(cmd, working, end);
+ffmpeg.run(cmd, working, end, 3);
 */
 
-function working(frames) {
-  console.log("Still working.. Frame: " + frames);
+function working(frames, jobid) {
+  console.log("Job n°" + jobid + " frame progress: " + frames);
 }
 
-function end(data) {
-  console.log("End");
+function end(data, jobid) {
+  console.log("Job n°" + jobid + "End");
 }
