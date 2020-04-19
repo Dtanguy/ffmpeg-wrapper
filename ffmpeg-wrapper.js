@@ -10,6 +10,90 @@ function setPath(path) {
 function setDebug() {
   ffmpeg_debug = true;
 }
+ 
+
+
+function checkParam(paramList, param){
+	if(!param){
+		console.log("Input error, empty param.");
+		return false;
+	}	
+	for(let i=0; i< paramList.length; i++){
+		let tmp = paramList[i];
+		if(!param[tmp]){
+			console.log("Input error, param not found: " + tmp);
+			return false;
+		}
+	}
+	return true;
+}
+
+
+/*
+let param_easy = {	
+  fps: 30,
+  threads: 2,
+  input: "/dev/video0",
+  output: "http://164.132.56.57",
+  outputRatio: "1280:720",
+  port: 8081,
+  streamSecret = 'toto'
+};
+*/
+function runStream(param, workingCb, endCb, jobid) {
+  // Check
+  if(!checkParam(['fps', 'threads', 'input', 'output', 'outputRatio', 'port', 'streamSecret'], param)){
+	console.err("ffmpeg.runStream: Input error");
+	return;
+  }
+    
+  var tmp = param.outputRatio.split(':');
+  var tmpurl = param.output + ":" + param.port + "/" + param.streamSecret + "/" + tmp[0] + "/" + tmp[1] + "/";
+
+  let cmd = "";  
+  cmd += "-s " + tmp.join('x') + " ";
+  cmd += "-f video4linux2" + " "; 
+  cmd += "-i " + param.input + " "; 
+  cmd += "-f mpegts -codec:v mpeg1video -b 800k"  + " "; 
+  cmd += "-r " + param.fps + " ";
+  cmd += "-threads " + param.threads + " ";
+  cmd += tmpurl;	
+
+  run(cmd, workingCb, endCb, jobid);
+}
+
+
+
+
+
+function stopStream() {
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Clean output file (otherwise ffmpeg child process stay stuck)
 function rmOutput(path) {
@@ -35,19 +119,13 @@ let param_easy = {
 */
 function runEasy(param, workingCb, endCb, jobid) {
   rmOutput(param.output);
-
+  
   // Check
-  if (!param || !param.input || !param.output) {
-    console.err("ffmpeg.runEasy: Input error");
-    return;
+  if(!checkParam(['fps', 'threads', 'input', 'output'], param)){
+	console.err("ffmpeg.runEasy: Input error");
+	return;
   }
-  if (!param.fps) {
-    param.fps = 25;
-  }
-  if (!param.threads) {
-    param.threads = 1;
-  }
-
+ 
   let cmd = "";
   cmd = "-r " + param.fps;
   cmd += " -threads " + param.threads;
@@ -61,29 +139,21 @@ let param_merge = {
   fps: 30,
   threads: 2,
   delay: 10, // delay between img in sec
+  inputPath: "/home/toto/my_img_foolder",
   input: ["1.jpg", "5.jpg", "3.jpg", "1.jpg", "2.jpg"],
   output: "output.mp4",
+  outputRatio: "1280:720",
 };
 */
 function mergeImg(param, workingCb, endCb, jobid) {
   rmOutput(param.output);
 
   // Check
-  if (
-    !param ||
-    !param.input ||
-    !param.input.length ||
-    !param.output ||
-    !param.delay ||
-    !param.outputRatio
-  ) {
-    console.err("ffmpeg.mergeImg: Input error");
-    return;
+  if(!checkParam(['fps', 'threads', 'input', 'output', 'outputRatio', 'inputPath', 'delay'], param)){
+	console.err("ffmpeg.mergeImg: Input error");
+	return;
   }
-  if (!param.inputPath) {
-    param.inputPath = "";
-  }
-
+ 
   let input = param.input;
   for (i = 0; i < param.input.length; i++) {
     input[i] = '"' + param.inputPath + param.input[i] + '"';
@@ -144,6 +214,8 @@ function run(cmd, workingCb, endCb, jobid) {
 
 module.exports.setPath = setPath;
 module.exports.setDebug = setDebug;
+module.exports.runStream = runStream;
+module.exports.stopStream = stopStream;
 module.exports.runEasy = runEasy;
 module.exports.mergeImg = mergeImg;
 module.exports.rmOutput = rmOutput;
