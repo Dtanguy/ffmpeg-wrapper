@@ -3,12 +3,12 @@ ffmpeg.setPath("C:\\Program Files (x86)\\ffmpeg\\bin\\ffmpeg.exe"); // For windo
 
 
 /*
-//{"url": "http://164.132.56.57:8081/toto/1280/720/", "ratio": "1280x720"}
+//{"url": "http://my_url:8081/toto/1280/720/", "ratio": "1280x720"}
  let paramStream = {	
   fps: 30,
   threads: 2,
   input: "/dev/video0",
-  output: "http://164.132.56.57",
+  output: "http://my_url",
   outputRatio: "1280:720",
   port: 8081,
   streamSecret: 'toto'
