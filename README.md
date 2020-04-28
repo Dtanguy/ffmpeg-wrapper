@@ -1,4 +1,4 @@
-# ffmpeg-wrapper
+# ffmpegWrapper
 
 Wrapper for somes ffmpeg function in node.
 
@@ -13,7 +13,7 @@ npm i "git+https://github.com/Dtanguy/ffmpeg-wrapper.git" --save
 Import:
 
 ```node
-const ffmpeg = require("ffmpeg-wrapper");
+const ffmpeg = require("ffmpegWrapper");
 ```
 
 Set ffmpeg path:
