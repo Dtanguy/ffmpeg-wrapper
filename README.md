@@ -5,7 +5,7 @@ Wrapper for somes ffmpeg function in node.
 ## Install
 
 ```node
-npm i "git+https://github.com/Dtanguy/ffmpeg-wrapper.git" --save 
+npm i "git+https://github.com/Dtanguy/ffmpegWrapper.git" --save 
 ```
 
 ## Configure
