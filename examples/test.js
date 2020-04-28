@@ -1,4 +1,4 @@
-const ffmpeg = require("./ffmpeg-wrapper.js");
+const ffmpeg = require("ffmpegWrapper");
 ffmpeg.setPath("C:\\Program Files (x86)\\ffmpeg\\bin\\ffmpeg.exe"); // For windows
 
 

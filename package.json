@@ -1,19 +1,19 @@
 {
-  "name": "ffmpeg-wrapper",
+  "name": "ffmpegWrapper",
   "version": "1.0.0",
   "description": "Wrapper for ffmpeg in node",
-  "main": "ffmpeg-wrapper.js",
+  "main": "ffmpegWrapper.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dtanguy/ffmpeg-wrapper.git"
+    "url": "git+https://github.com/Dtanguy/ffmpegWrapper.git"
   },
   "author": "Dtanguy",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Dtanguy/ffmpeg-wrapper/issues"
+    "url": "https://github.com/Dtanguy/ffmpegWrapper/issues"
   },
-  "homepage": "https://github.com/Dtanguy/ffmpeg-wrapper#readme"
+  "homepage": "https://github.com/Dtanguy/ffmpegWrapper#readme"
 }
