@@ -43,7 +43,7 @@ let param_easy = {
 function runStream(param, workingCb, endCb, jobid) {
   // Check
   if(!checkParam(['fps', 'threads', 'input', 'output', 'outputRatio', 'port', 'streamSecret'], param)){
-	console.err("ffmpeg.runStream: Input error");
+	console.error("ffmpeg.runStream: Input error");
 	return;
   }
     
@@ -122,7 +122,7 @@ function runEasy(param, workingCb, endCb, jobid) {
   
   // Check
   if(!checkParam(['fps', 'threads', 'input', 'output'], param)){
-	console.err("ffmpeg.runEasy: Input error");
+	console.error("ffmpeg.runEasy: Input error");
 	return;
   }
  
@@ -150,7 +150,7 @@ function mergeImg(param, workingCb, endCb, jobid) {
 
   // Check
   if(!checkParam(['fps', 'threads', 'input', 'output', 'outputRatio', 'inputPath', 'delay'], param)){
-	console.err("ffmpeg.mergeImg: Input error");
+	console.error("ffmpeg.mergeImg: Input error");
 	return;
   }
  
@@ -177,7 +177,7 @@ function mergeImg(param, workingCb, endCb, jobid) {
 
 function run(cmd, workingCb, endCb, jobid) {
   if (!cmd) {
-    console.err("ffmpeg.run: Input error");
+    console.error("ffmpeg.run: Input error");
     return;
   }
 
